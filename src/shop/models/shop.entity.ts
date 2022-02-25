@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ShopBanner } from './shop_banner.entity';
 
 export enum ShopType {
   EAT = 1,
@@ -8,9 +9,7 @@ export enum ShopType {
 }
 
 // 数据表 —— shops
-@Entity({
-  name: 'shops',
-})
+@Entity()
 export class Shop {
   // 自增主键
   @PrimaryGeneratedColumn()
@@ -27,6 +26,12 @@ export class Shop {
 
   @Column({ default: '' })
   poster: string;
+
+  @OneToMany(() => ShopBanner, (banner) => banner.shop)
+  banners: ShopBanner[];
+
+  @Column({ default: '' })
+  tags: string;
 
   @Column({ default: 0 })
   score: number;

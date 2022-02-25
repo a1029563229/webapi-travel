@@ -1,14 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Shop } from './shop.entity';
 
-@Entity({
-  name: 'shop_banners',
-})
+@Entity()
 export class ShopBanner {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  shop_id: number;
+  @ManyToOne(() => Shop, (shop) => shop.banners)
+  @JoinColumn({ name: 'shop_id' })
+  shop: Shop;
 
   @Column()
   url: string;
