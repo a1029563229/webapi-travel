@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Connection } from 'typeorm';
+import { Connection, getManager } from 'typeorm';
 import { CreateShopDto } from './dto/create-shop.dto';
 import { Shop } from './models/shop.entity';
 import { ShopBanner } from './models/shop_banner.entity';
@@ -10,6 +10,7 @@ export class ShopService {
   constructor(private readonly connection: Connection) {}
 
   async addShop(createShopDto: CreateShopDto) {
+    // 存储店铺信息
     const shop = new Shop();
     shop.name = createShopDto.name;
     shop.description = createShopDto.description;
@@ -17,30 +18,36 @@ export class ShopService {
     shop.score = createShopDto.score;
     shop.type = createShopDto.type;
     shop.evaluation = createShopDto.evaluation;
-    await this.connection.manager.save(shop);
+    shop.address = createShopDto.address;
+    shop.longitude = createShopDto.longitude;
+    shop.latitude = createShopDto.latitude;
 
     const tasks: Promise<any>[] = [Promise.resolve()];
-    // 处理 banner
-    if (createShopDto.banners?.length) {
-      const banners = createShopDto.banners.map((item) => {
-        const banner = new ShopBanner();
-        banner.shop_id = shop.id;
-        banner.url = item;
-        return banner;
-      });
-      tasks.push(this.connection.manager.save(banners));
-    }
+    await getManager().transaction(async (transactionalEntityManager) => {
+      await transactionalEntityManager.save(shop);
 
-    // 处理标签
-    if (createShopDto.tags?.length) {
-      const tags = createShopDto.tags.map((item) => {
-        const tag = new ShopTag();
-        tag.shop_id = shop.id;
-        tag.name = item;
-        return tag;
-      });
-      tasks.push(this.connection.manager.save(tags));
-    }
+      // 处理 banner
+      if (createShopDto.banners?.length) {
+        const banners = createShopDto.banners.map((item) => {
+          const banner = new ShopBanner();
+          banner.shop_id = shop.id;
+          banner.url = item;
+          return banner;
+        });
+        tasks.push(transactionalEntityManager.save(banners));
+      }
+
+      // 处理标签
+      if (createShopDto.tags?.length) {
+        const tags = createShopDto.tags.map((item) => {
+          const tag = new ShopTag();
+          tag.shop_id = shop.id;
+          tag.name = item;
+          return tag;
+        });
+        tasks.push(transactionalEntityManager.save(tags));
+      }
+    });
 
     return Promise.all(tasks);
   }

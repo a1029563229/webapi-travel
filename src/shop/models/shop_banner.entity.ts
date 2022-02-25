@@ -1,12 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Shop } from './shop.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({
+  name: 'shop_banners',
+})
 export class ShopBanner {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Shop)
+  @Column()
   shop_id: number;
 
   @Column()

@@ -16,4 +16,10 @@ export class CreateShopDto {
   score: number;
 
   evaluation: string;
+
+  address: string;
+
+  longitude: number;
+
+  latitude: number;
 }

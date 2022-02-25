@@ -4,8 +4,11 @@ CREATE TABLE IF NOT EXISTS `shops` (
   `description` varchar(64) NOT NULL DEFAULT '',
   `type` tinyint unsigned NOT NULL DEFAULT 0,
   `poster` varchar(200) NOT NULL DEFAULT '',
-  `score` tinyint NOT NULL DEFAULT 0,
+  `score` float NOT NULL DEFAULT 0,
   `evaluation` varchar(500) NOT NULL DEFAULT '',
+  `address` varchar(200) NOT NULL DEFAULT '',
+  `longitude` float NOT NULL DEFAULT 0,
+  `latitude` float NOT NULL DEFAULT 0,
   index `type`(`type`)
 ) engine=InnoDB charset=utf8;
 

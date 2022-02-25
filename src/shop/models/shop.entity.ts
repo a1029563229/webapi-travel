@@ -7,10 +7,12 @@ export enum ShopType {
   HAPPY,
 }
 
+// 数据表 —— shops
 @Entity({
   name: 'shops',
 })
 export class Shop {
+  // 自增主键
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -31,4 +33,13 @@ export class Shop {
 
   @Column({ default: '' })
   evaluation: string;
+
+  @Column({ default: '' })
+  address: string;
+
+  @Column({ default: 0 })
+  longitude: number;
+
+  @Column({ default: 0 })
+  latitude: number;
 }
