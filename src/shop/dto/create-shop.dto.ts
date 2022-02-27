@@ -1,5 +1,9 @@
 import { ShopType } from '../models/shop.entity';
 
+export class QueryShopDto {
+  id: number;
+}
+
 export class CreateShopDto {
   name: string;
 
@@ -22,4 +26,8 @@ export class CreateShopDto {
   longitude: number;
 
   latitude: number;
+}
+
+export class UpdateShopDto extends CreateShopDto {
+  id: string;
 }
