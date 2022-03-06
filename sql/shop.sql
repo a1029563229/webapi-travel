@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS `shop` (
   index `type`(`type`)
 ) engine=InnoDB charset=utf8;
 
+ALTER TABLE `shop` ADD COLUMN 
+(`average_cost` smallint NOT NULL DEFAULT 0 COMMENT '人均消费');
+
 CREATE TABLE IF NOT EXISTS `shop_banner` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `shop_id` int NOT NULL DEFAULT 0,

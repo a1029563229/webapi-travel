@@ -47,4 +47,7 @@ export class Shop {
 
   @Column({ default: 0 })
   latitude: number;
+
+  @Column({ default: 0 })
+  average_cost: number;
 }

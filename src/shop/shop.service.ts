@@ -16,21 +16,23 @@ export class ShopService {
   async getShopList(pagination: Pagination) {
     const shopRepository = this.connection.getRepository(Shop);
     const { pageIndex = 1, pageSize = 10 } = pagination;
-    return shopRepository
+    const data = await shopRepository
       .createQueryBuilder('shop')
       .leftJoinAndSelect('shop.banners', 'shop_banner')
       .take(pageIndex)
       .skip((pageIndex - 1) * pageSize)
       .getMany();
+    return data.map((item) => ({ ...item, tags: item.tags.split(',') }));
   }
 
   async getShopDetail(queryShopDto: QueryShopDto) {
-    return this.connection
+    const data = await this.connection
       .getRepository(Shop)
       .createQueryBuilder('shop')
       .leftJoinAndSelect('shop.banners', 'shop_banner')
       .where('shop.id = :id', { id: queryShopDto.id })
       .getOne();
+    return { ...data, tags: data.tags.split(',') };
   }
 
   async addShop(createShopDto: CreateShopDto) {
@@ -81,6 +83,7 @@ export class ShopService {
     shop.address = createShopDto.address;
     shop.longitude = createShopDto.longitude;
     shop.latitude = createShopDto.latitude;
+    shop.average_cost = createShopDto.average_cost;
     return shop;
   }
 

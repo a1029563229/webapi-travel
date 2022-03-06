@@ -34,6 +34,8 @@ export class CreateShopDto {
 
   @IsNotEmpty({ message: '店铺纬度不能为空' })
   latitude: number;
+
+  average_cost: number;
 }
 
 export class UpdateShopDto extends CreateShopDto {
