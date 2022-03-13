@@ -1,4 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
+import { Pagination } from 'src/dto/pagination';
 import { ShopType } from '../models/shop.entity';
 
 export class QueryShopDto {
@@ -40,4 +41,10 @@ export class CreateShopDto {
 
 export class UpdateShopDto extends CreateShopDto {
   id: string;
+}
+
+export class QueryShopListDto extends Pagination {
+  longitude: number;
+
+  latitude: number;
 }

@@ -1,11 +1,15 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const geohash = require('ngeohash');
+
 import { Injectable } from '@nestjs/common';
-import { Pagination } from 'src/dto/pagination';
+import { computeInstance, convertKMToKmStr } from 'src/utils';
 import { Connection, getManager } from 'typeorm';
 import {
   CreateShopDto,
   QueryShopDto,
+  QueryShopListDto,
   UpdateShopDto,
-} from './dto/create-shop.dto';
+} from './dto/shop.dto';
 import { Shop } from './models/shop.entity';
 import { ShopBanner } from './models/shop_banner.entity';
 
@@ -13,16 +17,32 @@ import { ShopBanner } from './models/shop_banner.entity';
 export class ShopService {
   constructor(private readonly connection: Connection) {}
 
-  async getShopList(pagination: Pagination) {
+  async getShopList(queryShopListDto: QueryShopListDto) {
     const shopRepository = this.connection.getRepository(Shop);
-    const { pageIndex = 1, pageSize = 10 } = pagination;
+    const { pageIndex = 1, pageSize = 10 } = queryShopListDto;
     const data = await shopRepository
       .createQueryBuilder('shop')
       .leftJoinAndSelect('shop.banners', 'shop_banner')
-      .take(pageIndex)
+      .take(pageSize)
       .skip((pageIndex - 1) * pageSize)
       .getMany();
-    return data.map((item) => ({ ...item, tags: item.tags.split(',') }));
+
+    return data
+      .map((item) => {
+        const distance = computeInstance(
+          queryShopListDto.longitude,
+          queryShopListDto.latitude,
+          item.longitude,
+          item.latitude,
+        );
+        return {
+          ...item,
+          tags: item.tags.split(','),
+          distanceKm: distance,
+          distance: convertKMToKmStr(distance),
+        };
+      })
+      .sort((a, b) => a.distanceKm - b.distanceKm);
   }
 
   async getShopDetail(queryShopDto: QueryShopDto) {
@@ -84,6 +104,10 @@ export class ShopService {
     shop.longitude = createShopDto.longitude;
     shop.latitude = createShopDto.latitude;
     shop.average_cost = createShopDto.average_cost;
+    shop.geo_code = geohash.encode(
+      createShopDto.longitude,
+      createShopDto.latitude,
+    );
     return shop;
   }
 

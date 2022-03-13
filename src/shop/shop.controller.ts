@@ -4,7 +4,8 @@ import {
   CreateShopDto,
   QueryShopDto,
   UpdateShopDto,
-} from './dto/create-shop.dto';
+  QueryShopListDto,
+} from './dto/shop.dto';
 import { ShopService } from './shop.service';
 
 @Controller('shop')
@@ -13,10 +14,11 @@ export class ShopController {
 
   // 获取店铺列表接口
   @Get('list')
-  async getShopList(@Query() pagination: Pagination) {
-    const list = await this.shopService.getShopList(pagination);
+  async getShopList(@Query() queryShopListDto: QueryShopListDto) {
+    const list = await this.shopService.getShopList(queryShopListDto);
     return {
-      ...pagination,
+      pageIndex: queryShopListDto.pageIndex,
+      pageSize: queryShopListDto.pageSize,
       list,
     };
   }
