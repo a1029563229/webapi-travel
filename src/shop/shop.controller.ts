@@ -1,5 +1,4 @@
 import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
-import { Pagination } from 'src/dto/pagination';
 import {
   CreateShopDto,
   QueryShopDto,

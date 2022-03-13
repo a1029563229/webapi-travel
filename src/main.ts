@@ -1,3 +1,4 @@
+import 'dotenv/config'; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ResponseErrorInterceptor } from './interceptors/responseError.interceptor';
