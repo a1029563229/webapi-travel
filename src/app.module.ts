@@ -4,9 +4,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CommonModule } from './common/common.module';
 import { ShopModule } from './shop/shop.module';
+import { MapModule } from './third/map/map.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), ShopModule, CommonModule],
+  imports: [TypeOrmModule.forRoot(), ShopModule, CommonModule, MapModule],
   controllers: [AppController],
   providers: [AppService],
 })

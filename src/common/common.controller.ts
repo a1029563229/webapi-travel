@@ -1,5 +1,6 @@
 import {
   Controller,
+  HttpCode,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -14,6 +15,7 @@ export class CommonController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
+  @HttpCode(200)
   uploadFile(@UploadedFile() file: Express.Multer.File) {
     return this.commonService.uploadFile(file);
   }
