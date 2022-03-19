@@ -52,7 +52,23 @@ export class ShopService {
       .leftJoinAndSelect('shop.banners', 'shop_banner')
       .where('shop.id = :id', { id: queryShopDto.id })
       .getOne();
-    return { ...data, tags: data.tags.split(',') };
+
+    const resData: any = { ...data };
+    if (queryShopDto.longitude) {
+      const distance = computeInstance(
+        queryShopDto.longitude,
+        queryShopDto.latitude,
+        data.longitude,
+        data.latitude,
+      );
+      resData.distance = convertKMToKmStr(distance);
+    }
+
+    return {
+      ...resData,
+      tags: resData.tags.split(','),
+      banners: resData.banners.map((item) => item.url),
+    };
   }
 
   async addShop(createShopDto: CreateShopDto) {

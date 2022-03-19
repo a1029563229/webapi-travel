@@ -5,6 +5,10 @@ import { ShopType } from '../models/shop.entity';
 export class QueryShopDto {
   @IsNotEmpty({ message: 'id 不能为空' })
   id: number;
+
+  longitude: number;
+
+  latitude: number;
 }
 
 export class CreateShopDto {
