@@ -128,9 +128,10 @@ export class ShopService {
   }
 
   getBanners(createShopDto: CreateShopDto) {
-    return createShopDto.banners.map((item) => {
+    return createShopDto.banners.map((item, index) => {
       const banner = new ShopBanner();
       banner.url = item;
+      banner.sort = index;
       return banner;
     });
   }

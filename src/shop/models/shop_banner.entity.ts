@@ -18,4 +18,7 @@ export class ShopBanner {
 
   @Column()
   url: string;
+
+  @Column()
+  sort: number;
 }

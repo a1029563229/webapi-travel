@@ -22,3 +22,9 @@ CREATE TABLE IF NOT EXISTS `shop_banner` (
   `url` varchar(255) NOT NULL DEFAULT '',
   index `shop_id`(`shop_id`, `url`)
 ) engine=InnoDB charset=utf8;
+
+ALTER TABLE `shop_banner` ADD COLUMN
+(`sort` smallint NOT NULL DEFAULT 0 COMMENT '排序');
+
+ALTER TABLE `shop_banner` DROP INDEX `shop_id`;
+ALTER TABLE `shop_banner` ADD INDEX `shop_id`(`shop_id`, `sort`, `url`);
