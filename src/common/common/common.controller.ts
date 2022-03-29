@@ -6,7 +6,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import '../utils/oss';
+import '../../utils/oss';
 import { CommonService } from './common.service';
 
 @Controller('common')

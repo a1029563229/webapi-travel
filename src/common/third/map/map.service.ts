@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { QueryPlace } from 'src/common/dto/map.dto';
+import { QueryPlace } from 'src/common/common/dto/map.dto';
 import { computeInstance, convertKMToKmStr } from 'src/utils';
 import service from './service';
 

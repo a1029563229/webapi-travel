@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { QueryPlace } from 'src/common/dto/map.dto';
+import { QueryPlace } from 'src/common/common/dto/map.dto';
 import { MapService } from './map.service';
 
 @Controller('map')

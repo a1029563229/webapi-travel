@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CommonModule } from './common/common.module';
+import { CommonModule } from './common/common/common.module';
 import { ShopModule } from './shop/shop.module';
-import { MapModule } from './third/map/map.module';
-import { WxModule } from './third/wx/wx.module';
-import { UserModule } from './user/user.module';
+import { MapModule } from './common/third/map/map.module';
+import { WxModule } from './common/third/wx/wx.module';
+import { UserModule } from './user/user/user.module';
 
 @Module({
   imports: [

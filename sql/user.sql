@@ -13,3 +13,9 @@ alter table `user` add column
 `country` varchar(50) NOT NULL DEFAULT '',
 `province` varchar(50) NOT NULL DEFAULT '',
 `city` varchar(50) NOT NULL DEFAULT '');
+
+CREATE TABLE IF NOT EXISTS `auth` (
+  `id` int unsigned PRIMARY KEY AUTO_INCREMENT,
+  `token` varchar(255) NOT NULL DEFAULT '',
+  `user_id` int unsigned NOT NULL DEFAULT 0
+) engine=InnoDB charset=utf8;
