@@ -19,3 +19,10 @@ CREATE TABLE IF NOT EXISTS `auth` (
   `token` varchar(255) NOT NULL DEFAULT '',
   `user_id` int unsigned NOT NULL DEFAULT 0
 ) engine=InnoDB charset=utf8;
+
+alter table `auth` add column (
+  `open_id` varchar(255) NOT NULL DEFAULT ''
+);
+
+alter table `auth` add index `open_id`(`open_id`, `token`);
+alter table `auth` add index `token`(`token`, `user_id`);

@@ -4,19 +4,24 @@ export class UserDto {
   @IsNotEmpty({ message: 'open_id 不能为空' })
   open_id: string;
 
-  nickname: string;
+  nickname?: string;
 
-  gender: number;
+  gender?: number;
 
-  mobile: number;
+  mobile?: number;
 
-  avatar: string;
+  avatar?: string;
 
-  country: string;
+  country?: string;
 
-  province: string;
+  province?: string;
 
-  city: string;
+  city?: string;
 
-  role: number;
+  role?: number;
+}
+
+export class QueryUserDto {
+  @IsNotEmpty({ message: 'token 不能为空' })
+  token: string;
 }

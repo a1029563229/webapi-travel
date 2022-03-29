@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
+import { Auth } from '../auth/models/auth.entity';
 import { UserDto } from './dto/user.dto';
 import { User } from './models/user.entity';
 
@@ -20,12 +21,26 @@ export class UserService {
     return this.connection.manager.save(user);
   }
 
-  queryUser(userDto: UserDto) {
-    const openId = userDto.open_id;
+  queryUserByOpenId(openId: string) {
     return this.connection
       .getRepository(User)
       .createQueryBuilder('user')
       .where('user.open_id = :openId', { openId })
+      .getOne();
+  }
+
+  async queryUserByToken(token: string) {
+    const auth = await this.connection
+      .getRepository(Auth)
+      .createQueryBuilder('auth')
+      .select(['auth.user_id'])
+      .where('auth.token = :token', { token })
+      .getOne();
+
+    return this.connection
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .where('user.id = :userId', { userId: auth.user_id })
       .getOne();
   }
 }

@@ -1,9 +1,9 @@
+import { hash } from '.';
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const OSS = require('ali-oss');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Duplex = require('stream').Duplex;
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { createHmac } = require('crypto');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 
@@ -14,12 +14,6 @@ const ossConfig = {
   bucket: process.env.OSS_BUCKET,
 };
 const client = new OSS(ossConfig);
-
-const hash = (str: string): string => {
-  return createHmac('sha256', 'jacklove' + new Date().getTime())
-    .update(str)
-    .digest('hex');
-};
 
 export const upload = async (file: Express.Multer.File): Promise<string> => {
   const stream = new Duplex();

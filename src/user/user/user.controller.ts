@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
-import { UserDto } from './dto/user.dto';
+import { QueryUserDto, UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -7,8 +7,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('info')
-  async getUserInfo(@Query() userDto: UserDto) {
-    const reply = await this.userService.queryUser(userDto);
+  async getUserInfo(@Query() queryUserDto: QueryUserDto) {
+    const reply = await this.userService.queryUserByToken(queryUserDto.token);
     return reply;
   }
 

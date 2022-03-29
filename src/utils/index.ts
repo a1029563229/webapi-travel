@@ -1,4 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+const { createHmac } = require('crypto');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const JsDistance = require('js-distance');
 
 export const computeInstance = (
@@ -22,4 +24,10 @@ export const convertKMToKmStr = (km: number): string => {
   } else {
     return (km * 1000).toFixed(0) + 'm';
   }
+};
+
+export const hash = (str: string): string => {
+  return createHmac('sha256', 'jacklove' + new Date().getTime())
+    .update(str)
+    .digest('hex');
 };
