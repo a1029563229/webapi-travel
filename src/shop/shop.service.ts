@@ -30,8 +30,8 @@ export class ShopService {
     return data
       .map((item) => {
         const distance = computeInstance(
-          queryShopListDto.longitude,
-          queryShopListDto.latitude,
+          +queryShopListDto.longitude,
+          +queryShopListDto.latitude,
           item.longitude,
           item.latitude,
         );
@@ -56,8 +56,8 @@ export class ShopService {
     const resData: any = { ...data };
     if (queryShopDto.longitude) {
       const distance = computeInstance(
-        queryShopDto.longitude,
-        queryShopDto.latitude,
+        +queryShopDto.longitude,
+        +queryShopDto.latitude,
         data.longitude,
         data.latitude,
       );

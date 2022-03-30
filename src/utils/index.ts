@@ -9,6 +9,8 @@ export const computeInstance = (
   BLongitude: number,
   BLatitude: number,
 ): number => {
+  if (ALongitude === 0 || ALatitude === 0) return 0;
+
   const distance = new JsDistance(ALatitude, ALongitude, BLatitude, BLongitude)
     .count()
     .toKilometre();
