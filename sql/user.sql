@@ -26,3 +26,10 @@ alter table `auth` add column (
 
 alter table `auth` add index `open_id`(`open_id`, `token`);
 alter table `auth` add index `token`(`token`, `user_id`);
+
+alter table `auth` add column (
+  `role` tinyint unsigned NOT NULL DEFAULT 0
+);
+alter table `auth` drop index `token`;
+alter table `auth` add index `token`(`token`, `user_id`, `role`);
+alter table `auth` drop index `open_id`;

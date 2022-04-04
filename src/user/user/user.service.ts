@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { Auth } from '../auth/models/auth.entity';
 import { UserDto, UserUpdateDto } from './dto/user.dto';
@@ -53,6 +53,10 @@ export class UserService {
       .select(['auth.user_id'])
       .where('auth.token = :token', { token })
       .getOne();
+
+    if (!auth) {
+      throw new ForbiddenException('token 已失效');
+    }
 
     return this.connection
       .getRepository(User)

@@ -12,5 +12,8 @@ export class Auth {
   user_id: number;
 
   @Column({ default: '' })
+  role: number;
+
+  @Column({ default: '' })
   open_id: string;
 }

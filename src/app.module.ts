@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -7,6 +7,7 @@ import { ShopModule } from './shop/shop.module';
 import { MapModule } from './common/third/map/map.module';
 import { WxModule } from './common/third/wx/wx.module';
 import { UserModule } from './user/user/user.module';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 
 @Module({
   imports: [
@@ -17,7 +18,12 @@ import { UserModule } from './user/user/user.module';
     UserModule,
     WxModule,
   ],
+  exports: [UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+  }
+}
