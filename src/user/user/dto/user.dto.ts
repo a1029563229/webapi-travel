@@ -21,11 +21,6 @@ export class UserDto {
   role?: number;
 }
 
-export class QueryUserDto {
-  @IsNotEmpty({ message: 'token 不能为空' })
-  token: string;
-}
-
 export class UserUpdateDto extends UserDto {
   @IsNotEmpty({ message: 'id 不能为空' })
   id: number;

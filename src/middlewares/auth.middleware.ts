@@ -13,6 +13,7 @@ export class AuthMiddleware implements NestMiddleware {
 
     try {
       const user = await this.userService.queryUserByToken(token);
+      req['context']['token'] = token;
       req['context']['user_id'] = user.id;
       req['context']['user_role'] = user.role;
     } finally {

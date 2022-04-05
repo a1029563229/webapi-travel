@@ -5,10 +5,13 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -20,7 +23,12 @@ export class AuthGuard implements CanActivate {
       throw new ForbiddenException('token 已失效');
     }
 
-    if (user_role !== 99) {
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    if (!roles) {
+      return true;
+    }
+
+    if (roles[0] === 'admin' && user_role !== 99) {
       throw new ForbiddenException('角色权限不足');
     }
 

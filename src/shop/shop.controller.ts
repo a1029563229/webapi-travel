@@ -8,6 +8,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { Roles } from 'src/decorators/roles.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import {
   CreateShopDto,
@@ -23,7 +24,6 @@ export class ShopController {
 
   // 获取店铺列表接口
   @Get('list')
-  @UseGuards(AuthGuard)
   async getShopList(@Query() queryShopListDto: QueryShopListDto) {
     const list = await this.shopService.getShopList(queryShopListDto);
     return {
@@ -44,6 +44,7 @@ export class ShopController {
   @Post('add')
   @HttpCode(200)
   @UseGuards(AuthGuard)
+  @Roles('admin')
   // 接收入参，类型为 CreateShopDto
   async addShop(@Body() createShopDto: CreateShopDto) {
     // 调用 service 的 addShop 方法，新增店铺
@@ -56,6 +57,7 @@ export class ShopController {
   @Post('update')
   @HttpCode(200)
   @UseGuards(AuthGuard)
+  @Roles('admin')
   // 接收入参，类型为 UpdateShopDto
   async updateShop(@Body() updateShopDto: UpdateShopDto) {
     // 调用 service 的 addShop 方法，新增店铺
@@ -68,6 +70,7 @@ export class ShopController {
   @Post('delete')
   @HttpCode(200)
   @UseGuards(AuthGuard)
+  @Roles('admin')
   async deleteShop(@Body() deleteShopDto: QueryShopDto) {
     await this.shopService.deleteShop(deleteShopDto);
     return null;
