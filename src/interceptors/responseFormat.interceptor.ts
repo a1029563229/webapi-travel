@@ -1,3 +1,4 @@
+// src/interceptors/responseFormat.interceptor.ts
 import {
   CallHandler,
   ExecutionContext,
@@ -14,6 +15,7 @@ export class ResponseFormatInterceptor implements NestInterceptor {
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
+      // 将原有的 `data` 转化为统一的格式后返回
       map((data) => ({
         code: 1,
         message: 'ok',

@@ -29,6 +29,7 @@ export class ShopService {
 
     return data
       .map((item) => {
+        // 计算用户传入的位置信息与当前店铺的距离信息
         const distance = computeInstance(
           +queryShopListDto.longitude,
           +queryShopListDto.latitude,
@@ -72,15 +73,15 @@ export class ShopService {
   }
 
   async addShop(createShopDto: CreateShopDto) {
-    // 存储店铺信息
     const shop = this.getShop(new Shop(), createShopDto);
 
-    // 处理 banner
+    // 存储 banner 信息
     if (createShopDto.banners?.length) {
       shop.banners = this.getBanners(createShopDto);
       await this.connection.manager.save(shop.banners);
     }
 
+    // 存储店铺信息
     return this.connection.manager.save(shop);
   }
 

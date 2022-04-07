@@ -24,6 +24,7 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
+    // * 代表该中间件在所有路由均生效
     consumer.apply(AuthMiddleware).forRoutes('*');
   }
 }

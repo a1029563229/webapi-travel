@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `shop` (
   `description` varchar(64) NOT NULL DEFAULT '',
   `type` tinyint unsigned NOT NULL DEFAULT 0,
   `poster` varchar(200) NOT NULL DEFAULT '',
+  `average_cost` smallint NOT NULL DEFAULT 0 COMMENT '人均消费',
   `score` float NOT NULL DEFAULT 0,
   `tags` varchar(200) NOT NULL DEFAULT '',
   `evaluation` varchar(500) NOT NULL DEFAULT '',
@@ -13,18 +14,10 @@ CREATE TABLE IF NOT EXISTS `shop` (
   index `type`(`type`)
 ) engine=InnoDB charset=utf8;
 
-ALTER TABLE `shop` ADD COLUMN 
-(`average_cost` smallint NOT NULL DEFAULT 0 COMMENT '人均消费');
-
 CREATE TABLE IF NOT EXISTS `shop_banner` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `shop_id` int NOT NULL DEFAULT 0,
   `url` varchar(255) NOT NULL DEFAULT '',
-  index `shop_id`(`shop_id`, `url`)
+  `sort` smallint NOT NULL DEFAULT 0 COMMENT '排序',
+  index `shop_id`(`shop_id`, `sort`, `url`)
 ) engine=InnoDB charset=utf8;
-
-ALTER TABLE `shop_banner` ADD COLUMN
-(`sort` smallint NOT NULL DEFAULT 0 COMMENT '排序');
-
-ALTER TABLE `shop_banner` DROP INDEX `shop_id`;
-ALTER TABLE `shop_banner` ADD INDEX `shop_id`(`shop_id`, `sort`, `url`);

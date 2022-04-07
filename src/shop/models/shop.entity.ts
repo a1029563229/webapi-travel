@@ -27,6 +27,7 @@ export class Shop {
   @Column({ default: '' })
   poster: string;
 
+  // 一对多关系，单个店铺对应多张店铺图片
   @OneToMany(() => ShopBanner, (banner) => banner.shop)
   banners: ShopBanner[];
 

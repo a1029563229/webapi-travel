@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   HttpCode,
@@ -42,14 +43,17 @@ export class ShopController {
 
   // add 接口
   @Post('add')
+  // 返回状态码 200
   @HttpCode(200)
+  // 使用鉴权路由守卫
   @UseGuards(AuthGuard)
+  // 定义只有 admin 身份可访问
   @Roles('admin')
   // 接收入参，类型为 CreateShopDto
   async addShop(@Body() createShopDto: CreateShopDto) {
     // 调用 service 的 addShop 方法，新增店铺
     await this.shopService.addShop(createShopDto);
-    // 返回成功提示
+    // 成功后返回 null
     return null;
   }
 
