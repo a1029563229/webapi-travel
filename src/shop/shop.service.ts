@@ -23,8 +23,8 @@ export class ShopService {
     const data = await shopRepository
       .createQueryBuilder('shop')
       .leftJoinAndSelect('shop.banners', 'shop_banner')
-      .take(pageSize)
-      .skip((pageIndex - 1) * pageSize)
+      // .take(pageSize)
+      // .skip((pageIndex - 1) * pageSize)
       .getMany();
 
     return data
