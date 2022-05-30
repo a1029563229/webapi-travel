@@ -10,7 +10,8 @@ export class MapService {
       params: {
         key: process.env.MAP_KEY,
         keywords: queryPlace.keywords,
-        city: queryPlace.city,
+        // city: queryPlace.city,
+        city: '成都',
         citylimit: true,
         extensions: 'base',
       },
