@@ -21,3 +21,17 @@ CREATE TABLE IF NOT EXISTS `shop_banner` (
   `sort` smallint NOT NULL DEFAULT 0 COMMENT '排序',
   index `shop_id`(`shop_id`, `sort`, `url`)
 ) engine=InnoDB charset=utf8;
+
+alter table `shop` add column (
+  `city` varchar(10) NOT NULL DEFAULT ''
+);
+
+alter table `shop` add index `city`(`city`);
+
+alter table `shop` add column (
+  `is_deleted` tinyint unsigned not null default 0 
+);
+
+alter table `shop_banner` add column (
+  `is_deleted` tinyint unsigned not null default 0 
+);

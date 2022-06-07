@@ -20,11 +20,24 @@ export class ShopService {
   async getShopList(queryShopListDto: QueryShopListDto) {
     const shopRepository = this.connection.getRepository(Shop);
     const { pageIndex = 1, pageSize = 10 } = queryShopListDto;
-    const data = await shopRepository
+    console.log({ city: queryShopListDto.city });
+    let shopQuery = shopRepository
       .createQueryBuilder('shop')
-      .leftJoinAndSelect('shop.banners', 'shop_banner')
-      // .take(pageSize)
-      // .skip((pageIndex - 1) * pageSize)
+      .leftJoinAndSelect(
+        'shop.banners',
+        'shop_banner',
+        'shop_banner.is_deleted = 0',
+      )
+      .where('shop.is_deleted = 0');
+
+    if (queryShopListDto.city) {
+      shopQuery = shopQuery.andWhere('city = :city', {
+        city: queryShopListDto.city,
+      });
+    }
+    const data = await shopQuery
+      .take(pageSize)
+      .skip((pageIndex - 1) * pageSize)
       .getMany();
 
     return data
@@ -125,6 +138,7 @@ export class ShopService {
       createShopDto.longitude,
       createShopDto.latitude,
     );
+    shop.city = createShopDto.city;
     return shop;
   }
 
@@ -141,15 +155,15 @@ export class ShopService {
     return getManager().transaction(async (transactionalEntityManager) => {
       await transactionalEntityManager
         .createQueryBuilder()
-        .delete()
-        .from(Shop)
+        .update(Shop)
+        .set({ is_deleted: 1 })
         .where('id = :id', { id: deleteShopDto.id })
         .execute();
 
       await transactionalEntityManager
         .createQueryBuilder()
-        .delete()
-        .from(ShopBanner)
+        .update(ShopBanner)
+        .set({ is_deleted: 1 })
         .where('shop_id = :shop_id', { shop_id: deleteShopDto.id })
         .execute();
     });

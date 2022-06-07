@@ -41,6 +41,8 @@ export class CreateShopDto {
   latitude: number;
 
   average_cost: number;
+
+  city: string;
 }
 
 export class UpdateShopDto extends CreateShopDto {
@@ -51,4 +53,6 @@ export class QueryShopListDto extends Pagination {
   longitude: number;
 
   latitude: number;
+
+  city: string;
 }

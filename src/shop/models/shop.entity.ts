@@ -54,4 +54,10 @@ export class Shop {
 
   @Column({ default: '' })
   geo_code: string;
+
+  @Column({ default: '' })
+  city: string;
+
+  @Column({ default: 0 })
+  is_deleted: number;
 }

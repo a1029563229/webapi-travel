@@ -23,4 +23,7 @@ export class ShopBanner {
 
   @Column()
   sort: number;
+
+  @Column()
+  is_deleted: number;
 }
