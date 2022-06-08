@@ -20,7 +20,6 @@ export class ShopService {
   async getShopList(queryShopListDto: QueryShopListDto) {
     const shopRepository = this.connection.getRepository(Shop);
     const { pageIndex = 1, pageSize = 10 } = queryShopListDto;
-    console.log({ city: queryShopListDto.city });
     let shopQuery = shopRepository
       .createQueryBuilder('shop')
       .leftJoinAndSelect(
@@ -33,6 +32,11 @@ export class ShopService {
     if (queryShopListDto.city) {
       shopQuery = shopQuery.andWhere('city = :city', {
         city: queryShopListDto.city,
+      });
+    }
+    if (+queryShopListDto.type) {
+      shopQuery = shopQuery.andWhere('type = :type', {
+        type: queryShopListDto.type,
       });
     }
     const data = await shopQuery

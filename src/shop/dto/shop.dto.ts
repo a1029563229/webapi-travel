@@ -55,4 +55,6 @@ export class QueryShopListDto extends Pagination {
   latitude: number;
 
   city: string;
+
+  type: ShopType;
 }

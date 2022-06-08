@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   HttpCode,
   Post,
   UploadedFile,
@@ -18,5 +19,10 @@ export class CommonController {
   @HttpCode(200)
   uploadFile(@UploadedFile() file: Express.Multer.File) {
     return this.commonService.uploadFile(file);
+  }
+
+  @Get('city/list')
+  getCityList() {
+    return this.commonService.getCityList();
   }
 }
