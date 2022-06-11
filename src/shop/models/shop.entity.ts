@@ -6,6 +6,7 @@ export enum ShopType {
   DRINK,
   PLAY,
   HAPPY,
+  HOUSE,
 }
 
 // 数据表 —— shops
