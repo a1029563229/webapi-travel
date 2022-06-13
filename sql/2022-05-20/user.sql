@@ -33,3 +33,14 @@ alter table `auth` add column (
 alter table `auth` drop index `token`;
 alter table `auth` add index `token`(`token`, `user_id`, `role`);
 alter table `auth` drop index `open_id`;
+
+
+CREATE TABLE `auth` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `token` varchar(255) NOT NULL DEFAULT '',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `open_id` varchar(255) NOT NULL DEFAULT '',
+  `role` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `token` (`token`,`user_id`,`role`)
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8
