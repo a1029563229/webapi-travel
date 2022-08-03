@@ -63,3 +63,16 @@ CREATE TABLE IF NOT EXISTS `travelling_guideline_route` (
   `updated_on` datetime COMMENT '更新时间',
   index `idx_t_guide_id`(`t_guide_id`)
 ) ENGINE=InnoDB CHARSET=utf8 COMMENT='旅游攻略店铺路线表';
+
+alter table `travelling_guideline_text_item` add column (
+  sort smallint not null default 0 COMMENT "排序"
+);
+alter table `travelling_guideline_shop_item` add column (
+  sort smallint not null default 0 COMMENT "排序"
+);
+alter table `travelling_guideline_image_item` add column (
+  sort smallint not null default 0 COMMENT "排序"
+);
+alter table `travelling_guideline_route` add column (
+  sort smallint not null default 0 COMMENT "排序"
+);
