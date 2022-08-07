@@ -7,7 +7,6 @@ import {
   Post,
   Query,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { Roles } from 'src/decorators/roles.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
