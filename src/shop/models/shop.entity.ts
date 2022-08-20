@@ -13,7 +13,7 @@ export enum ShopType {
 @Entity()
 export class Shop {
   // 自增主键
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ default: '' })
